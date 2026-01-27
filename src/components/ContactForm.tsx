@@ -1,10 +1,6 @@
 import { useState } from "react";
 import FadeIn from "./FadeIn";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { format } from "date-fns";
-import { sv } from "date-fns/locale";
-import { CalendarIcon, Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const products = [
@@ -20,7 +16,6 @@ const products = [
 
 const ContactForm = () => {
   const { toast } = useToast();
-  const [date, setDate] = useState<Date>();
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
   const [otherProduct, setOtherProduct] = useState("");
   const [consent, setConsent] = useState(false);
@@ -55,7 +50,6 @@ const ContactForm = () => {
     }
 
     const allProducts = [...selectedProducts, otherProduct].filter(Boolean).join(", ");
-    const formattedDate = date ? format(date, "yyyy-MM-dd", { locale: sv }) : "Ej angivet";
 
     const mailtoLink = `mailto:kontakt.solcirkeln@gmail.com?subject=Offertförfrågan från ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(
 `Offertförfrågan från Solcirkelns hemsida
@@ -71,9 +65,6 @@ ${formData.postalCode} ${formData.city}
 
 INTRESSERAD AV
 ${allProducts || "Ej angivet"}
-
-ÖNSKAT DATUM FÖR HEMBESÖK
-${formattedDate}
 
 BESKRIVNING
 ${formData.message}
@@ -244,33 +235,6 @@ ${formData.message}
                   />
                 </div>
 
-                {/* Date picker */}
-                <div className="space-y-4 mb-8">
-                  <h4 className="text-sm font-medium text-primary uppercase tracking-wide">Önskat datum för hembesök</h4>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <button
-                        type="button"
-                        className="bg-input border border-border rounded-lg px-4 py-3 w-full text-left flex items-center gap-2 hover:border-primary/50 transition-colors"
-                      >
-                        <CalendarIcon className="w-4 h-4 text-muted-foreground" />
-                        <span className={date ? "text-foreground" : "text-muted-foreground"}>
-                          {date ? format(date, "d MMMM yyyy", { locale: sv }) : "Välj datum"}
-                        </span>
-                      </button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 bg-card border-border" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={date}
-                        onSelect={setDate}
-                        disabled={(date) => date < new Date()}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
-
                 {/* Message */}
                 <div className="space-y-4 mb-8">
                   <h4 className="text-sm font-medium text-primary uppercase tracking-wide">Beskriv kort ditt projekt</h4>
@@ -303,6 +267,10 @@ ${formData.message}
                 >
                   Skicka offertförfrågan
                 </button>
+
+                <p className="text-muted-foreground text-sm text-center mt-4">
+                  Vi återkopplar oftast inom 3 arbetsdagar.
+                </p>
               </form>
             </FadeIn>
           </div>
