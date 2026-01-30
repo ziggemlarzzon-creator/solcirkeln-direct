@@ -1,4 +1,4 @@
-import { Toaster } from "@/components/ui/sonner"; // choose either shadcn or Sonner, not both
+import { Toaster } from "@/components/ui/sonner"; // choose either Sonner or shadcn, not both
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -10,14 +10,13 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      {/* Toast notifications */}
+      {/* Only one Toaster */}
       <Toaster />
 
-      {/* Routing with GitHub Pages base path */}
+      {/* Routing */}
       <BrowserRouter basename="/solcirkeln-direct/">
         <Routes>
           <Route path="/" element={<Index />} />
-          {/* Add all custom routes above the catch-all "*" route */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
