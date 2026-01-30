@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
 export default defineConfig({
-  base: "/solcirkeln-direct/", // GitHub Pages repo name
+  base: "/solcirkeln-direct/", // <-- Skriv ditt repo-namn här, exakt
   plugins: [react()],
   resolve: {
     alias: {
